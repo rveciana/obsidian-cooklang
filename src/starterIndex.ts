@@ -35,7 +35,8 @@ class CooklangSvelteView extends TextFileView {
     }
 
     getDisplayText(): string {
-        return "Recipe";
+        if (this.file) return this.file.basename;
+        else return "Cooklang (no file)";
     }
 
     getIcon(): string {
