@@ -1,6 +1,5 @@
 import {
     App,
-    ItemView,
     Platform,
     Plugin,
     PluginSettingTab,
@@ -10,7 +9,7 @@ import {
 } from "obsidian";
 
 import { DEFAULT_SETTINGS, type CookLangSettings } from "./settings";
-import DiceRoller from "./ui/DIceRoller.svelte";
+import View from "./ui/View.svelte";
 import Edit from "./ui/Edit.svelte";
 
 const VIEW_TYPE = "svelte-view";
@@ -20,7 +19,7 @@ const VIEW_TYPE = "svelte-view";
 const DEFAULT_DATA = "";
 
 class CooklangSvelteView extends TextFileView {
-    view: DiceRoller | Edit;
+    view: View | Edit;
     mode: "source" | "preview" = "preview";
     changeModeButton: HTMLElement;
     data: string = DEFAULT_DATA;
@@ -45,7 +44,7 @@ class CooklangSvelteView extends TextFileView {
 
     async onOpen(): Promise<void> {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        this.view = new DiceRoller({
+        this.view = new View({
             target: (this as any).contentEl,
             props: { data: this.data },
         });
@@ -80,7 +79,7 @@ class CooklangSvelteView extends TextFileView {
 
         this.view =
             this.mode === "preview"
-                ? new DiceRoller({
+                ? new View({
                       target: this.contentEl,
                       props: { data: this.data },
                   })

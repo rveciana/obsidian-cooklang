@@ -16,6 +16,11 @@
     style-mod "^4.1.0"
     w3c-keyname "^2.2.4"
 
+"@cooklang/cooklang-ts@^1.2.5":
+  version "1.2.5"
+  resolved "https://registry.npmjs.org/@cooklang/cooklang-ts/-/cooklang-ts-1.2.5.tgz"
+  integrity sha512-ePs/krnanoCprK6FVog5JBXLSWLvIxE9jMmhFsArcgEYVTtm6Ee5VJk1Yi5aT6hjREmuE8PiBJs4W5qsDvIenA==
+
 "@eslint/eslintrc@^1.3.0":
   version "1.3.0"
   resolved "https://registry.npmjs.org/@eslint/eslintrc/-/eslintrc-1.3.0.tgz"
@@ -96,6 +101,11 @@
   dependencies:
     estree-walker "^2.0.1"
     picomatch "^2.2.2"
+
+"@svelte-plugins/tooltips@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.npmjs.org/@svelte-plugins/tooltips/-/tooltips-3.0.0.tgz"
+  integrity sha512-lE7LKU01OY8XYwsWmRxEcBZJqVv+f/TP5JQP5eqzb9ppS9UeN8DF/mFP9i2BfELRfYdwl4qwUENTPYBndMI3LA==
 
 "@sveltejs/vite-plugin-svelte@^1.0.1":
   version "1.0.1"
@@ -1235,10 +1245,10 @@ svelte-preprocess@^4.0.0, svelte-preprocess@^4.10.7:
     sorcery "^0.10.0"
     strip-indent "^3.0.0"
 
-svelte@^3.2.0, svelte@^3.23.0, svelte@^3.24.0, svelte@^3.44.0, svelte@^3.49.0, svelte@>=3.19.0:
-  version "3.49.0"
-  resolved "https://registry.npmjs.org/svelte/-/svelte-3.49.0.tgz"
-  integrity sha512-+lmjic1pApJWDfPCpUUTc1m8azDqYCG1JN9YEngrx/hUyIcFJo6VZhj0A1Ai0wqoHcEIuQy+e9tk+4uDgdtsFA==
+svelte@^3.2.0, svelte@^3.23.0, svelte@^3.24.0, svelte@^3.44.0, svelte@^3.49.0, "svelte@^3.54.0 || ^4.0.0 || ^5.0.0-next.0", svelte@>=3.19.0:
+  version "3.59.2"
+  resolved "https://registry.npmjs.org/svelte/-/svelte-3.59.2.tgz"
+  integrity sha512-vzSyuGr3eEoAtT/A6bmajosJZIUWySzY2CzB3w2pgPvnkUjGqlDnsNnA0PMO+mMAhuyMul6C2uuZzY6ELSkzyA==
 
 text-table@^0.2.0:
   version "0.2.0"
