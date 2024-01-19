@@ -3,6 +3,7 @@ import {
     Platform,
     Plugin,
     PluginSettingTab,
+    TFile,
     TextFileView,
     WorkspaceLeaf,
     setIcon,
@@ -11,6 +12,7 @@ import {
 import { DEFAULT_SETTINGS, type CookLangSettings } from "./settings";
 import View from "./ui/View.svelte";
 import Edit from "./ui/Edit.svelte";
+import { isTFile } from "./ui/utils";
 
 const VIEW_TYPE = "svelte-view";
 
@@ -46,7 +48,7 @@ class CooklangSvelteView extends TextFileView {
     async onOpen(): Promise<void> {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         this.view = new View({
-            target: (this as any).contentEl,
+            target: this.contentEl,
             props: { data: this.data },
         });
 
@@ -63,8 +65,27 @@ class CooklangSvelteView extends TextFileView {
         return this.data;
     }
     setViewData(data: string): void {
+        const images = (
+            this.file.parent.children.filter(
+                (f) =>
+                    isTFile(f) &&
+                    (f.basename == this.file.basename ||
+                        f.basename.startsWith(this.file.basename + ".")) &&
+                    f.name != this.file.name &&
+                    ["png", "jpg", "jpeg", "gif"].includes(f.extension)
+            ) as TFile[]
+        ).reduce((acc, f) => {
+            const split = f.basename.split(".");
+            if (split.length > 1) {
+                const name = split[1];
+                acc[name] = this.app.vault.getResourcePath(f);
+            } else {
+                acc["recipe"] = this.app.vault.getResourcePath(f);
+            }
+            return acc;
+        }, {} as Record<string, string>);
         this.data = data;
-        this.view.$set({ data });
+        this.view.$set({ data, images });
     }
     clear(): void {
         this.data = "";

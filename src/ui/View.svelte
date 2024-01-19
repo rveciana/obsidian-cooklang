@@ -3,17 +3,23 @@
     import { tooltip } from '@svelte-plugins/tooltips';
 
     export let data:string;
+    export  let images: Record<string, string> = {}
     let recipe: ParseResult;
+   
+
+    
    
     $: recipe = new Parser().parse(data);
 
-    $: console.log(recipe);
 
 
 
 </script>
 
 <div>
+    {#if images.recipe}
+        <img src={images.recipe} alt="Final result" />
+    {/if}
     <h2 class="H2">Ingredients:</h2>
     <ul class="ingredients">
         {#each recipe.ingredients as ingredient}
@@ -31,6 +37,9 @@
     <div>
         {#each recipe.steps as step, i}
            <h3>Step {i+1}</h3>
+           {#if images[i]}
+             <img src={images[i]} alt="Final result" />
+            {/if}
            <p>
            {#each step as stepPart}
              {#if stepPart.type === 'text'}

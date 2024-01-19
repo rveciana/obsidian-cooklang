@@ -1,4 +1,5 @@
 import type { Ingredient, Cookware, Timer, Text } from "@cooklang/cooklang-ts";
+import type { TAbstractFile, TFile } from "obsidian";
 
 export const isText = (
     step: Ingredient | Cookware | Timer | Text
@@ -19,4 +20,8 @@ export const isTimer = (
     step: Ingredient | Cookware | Timer | Text
 ): step is Timer => {
     return (step as Timer).type === "timer";
+};
+
+export const isTFile = (file: TAbstractFile): file is TFile => {
+    return (file as TFile).path !== undefined;
 };
