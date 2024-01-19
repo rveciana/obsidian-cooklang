@@ -7,6 +7,7 @@
    
     $: recipe = new Parser().parse(data);
 
+    $: console.log(recipe);
 
 
 
