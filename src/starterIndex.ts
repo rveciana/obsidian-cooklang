@@ -1,5 +1,6 @@
 import {
     App,
+    Platform,
     Plugin,
     PluginSettingTab,
     TFile,
@@ -85,6 +86,7 @@ class CooklangSvelteView extends TextFileView {
             return acc;
         }, {} as Record<string, string>);
         this.images = images;
+
         this.data = data;
         this.view.$set({ data, images });
     }
@@ -178,10 +180,7 @@ export default class CooklangPlugin extends Plugin {
     async openMapView() {
         const workspace = this.app.workspace;
         workspace.detachLeavesOfType(VIEW_TYPE);
-        const leaf = workspace.getLeaf(
-            // @ts-ignore
-            !Platform.isMobile
-        );
+        const leaf = workspace.getLeaf(!Platform.isMobile);
         await leaf.setViewState({ type: VIEW_TYPE });
         workspace.revealLeaf(leaf);
     }
