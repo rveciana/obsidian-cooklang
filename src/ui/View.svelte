@@ -18,20 +18,24 @@
 
 <div>
     {#if images.recipe}
-        <img src={images.recipe} alt="Final result" />
+        <img class="image-main" src={images.recipe} alt="Final result" />
     {/if}
-    <h2 class="H2">Ingredients:</h2>
-    <ul class="ingredients">
-        {#each recipe.ingredients as ingredient}
-            <li>{ingredient.quantity} {ingredient.units} {ingredient.name}</li>
-        {/each}
-    </ul>
-    <h2 class="H2">Cookware:</h2>
+    <section class="section">
+        <h3 class="section-title">Ingredients:</h3>
+        <ul class="ingredients">
+            {#each recipe.ingredients as ingredient}
+                <li>{ingredient.quantity} {ingredient.units} {ingredient.name}</li>
+            {/each}
+        </ul>
+    </section>  
+    <section class="section">
+    <h3 class="section-title">Cookware:</h3>
     <ul class="cookware">
         {#each recipe.cookwares as cookware}
             <li>{cookware.name}</li>
         {/each}
     </ul>
+</section>
     <h2 class="H2">Method:</h2>
     
     <div>
@@ -60,6 +64,33 @@
 </div>
 
 <style>
+.image-main{
+   
+width: 100%;}
+    section {
+        border: 1px solid #ccc;
+        border-radius: 0.25rem;
+        padding: 10px;
+        margin-top: 10px;
+        position: relative;
+        
+    }
+    .section-title {
+        display: inline-block;
+        left: 5px;
+        top: -1.5rem;
+        position: absolute;
+
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding-left: 0.75rem;
+    padding-right: 0.75rem;
+
+   
+    --tw-bg-opacity: 1;
+    background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+        }
    ul.ingredients{
     column-count: 2;
    }

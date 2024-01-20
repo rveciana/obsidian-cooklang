@@ -1,6 +1,5 @@
 import {
     App,
-    Platform,
     Plugin,
     PluginSettingTab,
     TFile,
@@ -10,8 +9,8 @@ import {
 } from "obsidian";
 
 import { DEFAULT_SETTINGS, type CookLangSettings } from "./settings";
-import View from "./ui/View.svelte";
 import Edit from "./ui/Edit.svelte";
+import View from "./ui/View.svelte";
 import { isTFile } from "./ui/utils";
 
 const VIEW_TYPE = "svelte-view";
