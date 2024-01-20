@@ -190,5 +190,5 @@
         calc(-50% + var(--tooltip-offset-x)),
         calc(100% + var(--tooltip-offset-y))
       )
-      scale(1, 1)}ul.ingredients.svelte-1pw4rws{column-count:2}ul.cookware.svelte-1pw4rws{column-count:2}span.cookware.svelte-1pw4rws{font-weight:600}span.ingredient.svelte-1pw4rws{font-weight:600}span.timer.svelte-1pw4rws{font-weight:600}.tooltip{--tooltip-background-color:rgb(235, 232, 233);--tooltip-color:black;--tooltip-box-shadow:0 1px 8px rgb(125, 123, 123)}.content.svelte-1yvnhx3{white-space:pre
+      scale(1, 1)}ul.ingredients.svelte-1kcny7a{column-count:2}ul.cookware.svelte-1kcny7a{column-count:2}span.cookware.svelte-1kcny7a{font-weight:600}span.ingredient.svelte-1kcny7a{font-weight:600}span.timer.svelte-1kcny7a{font-weight:600}.theme-light .tooltip{--tooltip-background-color:rgb(235, 232, 233);--tooltip-color:black;--tooltip-box-shadow:0 1px 8px rgb(125, 123, 123)}.content.svelte-1yvnhx3{white-space:pre
     }

@@ -80,7 +80,7 @@
     font-weight: 600;
    }
    
-   :global(.tooltip) {
+   :global(.theme-light .tooltip) {
     --tooltip-background-color: rgb(235, 232, 233);
     --tooltip-color: black;
     --tooltip-box-shadow: 0 1px 8px rgb(125, 123, 123);
