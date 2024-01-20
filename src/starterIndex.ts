@@ -24,6 +24,7 @@ class CooklangSvelteView extends TextFileView {
     mode: "source" | "preview" = "preview";
     changeModeButton: HTMLElement;
     data: string = DEFAULT_DATA;
+    images: Record<string, string> = {};
     settings: CookLangSettings;
 
     constructor(leaf: WorkspaceLeaf, settings: CookLangSettings) {
@@ -83,6 +84,7 @@ class CooklangSvelteView extends TextFileView {
             }
             return acc;
         }, {} as Record<string, string>);
+        this.images = images;
         this.data = data;
         this.view.$set({ data, images });
     }
@@ -102,7 +104,7 @@ class CooklangSvelteView extends TextFileView {
             this.mode === "preview"
                 ? new View({
                       target: this.contentEl,
-                      props: { data: this.data },
+                      props: { data: this.data, images: this.images },
                   })
                 : new Edit({
                       target: this.contentEl,
