@@ -1,23 +1,18 @@
 <script lang="ts">
     import { Parser, type ParseResult } from '@cooklang/cooklang-ts';
     import { tooltip } from '@svelte-plugins/tooltips';
+    import i18n from '../lang/i18n';
 
     export let data:string;
     export  let images: Record<string, string> = {}
     let recipe: ParseResult;
    
-
-   
     $: recipe = new Parser().parse(data);
-
-
-
-
 </script>
 
 <div>
     {#if data.length === 0}
-        <p>Empty recipe. Edit it using the pencil icon.</p>
+        <p>{$i18n.t('empty')}</p>
     
     {:else}
     
@@ -26,7 +21,7 @@
     {/if}
     {#if recipe.ingredients.length > 0}
     <section class="section">
-        <h3 class="section-title">Ingredients:</h3>
+        <h3 class="section-title">{$i18n.t('ingredients')}</h3>
         <ul class="ingredients">
             {#each recipe.ingredients as ingredient}
                 <li>{ingredient.quantity} {ingredient.units} {ingredient.name}</li>
@@ -36,7 +31,7 @@
     {/if}
     {#if recipe.cookwares.length > 0}
     <section class="section">
-    <h3 class="section-title">Cookware:</h3>
+    <h3 class="section-title">{$i18n.t('cookware')}</h3>
     <ul class="cookware">
         {#each recipe.cookwares as cookware}
             <li>{cookware.name}</li>
@@ -44,11 +39,11 @@
     </ul>
 </section>
 {/if}
-    <h2 class="H2">Method:</h2>
+    <h2 class="H2">{$i18n.t('method')}:</h2>
     
     <div>
         {#each recipe.steps as step, i}
-           <h3>Step {i+1}</h3>
+           <h3>{$i18n.t('step')} {i+1}</h3>
            {#if images[i]}
              <img src={images[i]} alt="Final result" />
             {/if}

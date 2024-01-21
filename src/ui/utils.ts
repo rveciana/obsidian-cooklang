@@ -23,5 +23,5 @@ export const isTimer = (
 };
 
 export const isTFile = (file: TAbstractFile): file is TFile => {
-    return (file as TFile).path !== undefined;
+    return (file as TFile).basename !== undefined;
 };
