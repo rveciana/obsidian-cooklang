@@ -7,7 +7,6 @@
     let recipe: ParseResult;
    
 
-    
    
     $: recipe = new Parser().parse(data);
 
@@ -17,6 +16,11 @@
 </script>
 
 <div>
+    {#if data.length === 0}
+        <p>Empty recipe. Edit it using the pencil icon.</p>
+    
+    {:else}
+    
     {#if images.recipe}
         <img class="image-main" src={images.recipe} alt="Final result" />
     {/if}
@@ -60,7 +64,7 @@
            </p>
         {/each}
         </div>
-
+        {/if}
 </div>
 
 <style>
