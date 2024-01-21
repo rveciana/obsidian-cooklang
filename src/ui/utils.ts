@@ -1,4 +1,5 @@
 import type { Ingredient, Cookware, Timer, Text } from "@cooklang/cooklang-ts";
+import { franc } from "franc";
 import type { TAbstractFile, TFile } from "obsidian";
 
 export const isText = (
@@ -25,3 +26,10 @@ export const isTimer = (
 export const isTFile = (file: TAbstractFile): file is TFile => {
     return (file as TFile).basename !== undefined;
 };
+
+export const getI18n = (data:string) => {
+    //console.log(franc(data));
+    //onst userLang = window.localStorage.getItem('language');
+    //console.log(`User's display language: ${userLang}`);
+    return "ca";
+}

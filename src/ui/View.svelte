@@ -2,12 +2,25 @@
     import { Parser, type ParseResult } from '@cooklang/cooklang-ts';
     import { tooltip } from '@svelte-plugins/tooltips';
     import i18n from '../lang/i18n';
+	import { getI18n } from './utils';
+
 
     export let data:string;
     export  let images: Record<string, string> = {}
     let recipe: ParseResult;
    
     $: recipe = new Parser().parse(data);
+
+    $: {
+        const lang = getI18n(data);
+        console.log(lang);
+        if($i18n.language !== lang){
+            $i18n.changeLanguage(lang);
+        }
+        
+    }
+
+
 </script>
 
 <div>

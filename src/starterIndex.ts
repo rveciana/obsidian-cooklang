@@ -121,6 +121,7 @@ class CooklangSvelteView extends TextFileView {
 export default class CooklangPlugin extends Plugin {
     private view: CooklangSvelteView;
     settings: CookLangSettings;
+    
 
     async onload() {
         await this.loadSettings();
