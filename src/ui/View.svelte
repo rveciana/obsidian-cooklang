@@ -24,6 +24,7 @@
     {#if images.recipe}
         <img class="image-main" src={images.recipe} alt="Final result" />
     {/if}
+    {#if recipe.ingredients.length > 0}
     <section class="section">
         <h3 class="section-title">Ingredients:</h3>
         <ul class="ingredients">
@@ -32,6 +33,8 @@
             {/each}
         </ul>
     </section>  
+    {/if}
+    {#if recipe.cookwares.length > 0}
     <section class="section">
     <h3 class="section-title">Cookware:</h3>
     <ul class="cookware">
@@ -40,6 +43,7 @@
         {/each}
     </ul>
 </section>
+{/if}
     <h2 class="H2">Method:</h2>
     
     <div>
