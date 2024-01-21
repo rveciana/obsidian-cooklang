@@ -66,26 +66,27 @@ class CooklangSvelteView extends TextFileView {
         return this.data;
     }
     setViewData(data: string): void {
-        const images = (
-            this.file.parent.children.filter(
-                (f) =>
-                    isTFile(f) &&
-                    (f.basename == this.file.basename ||
-                        f.basename.startsWith(this.file.basename + ".")) &&
-                    f.name != this.file.name &&
-                    ["png", "jpg", "jpeg", "gif"].includes(f.extension)
-            ) as TFile[]
-        ).reduce((acc, f) => {
-            const split = f.basename.split(".");
-            if (split.length > 1) {
-                const name = split[1];
-                acc[name] = this.app.vault.getResourcePath(f);
-            } else {
-                acc["recipe"] = this.app.vault.getResourcePath(f);
-            }
-            return acc;
-        }, {} as Record<string, string>);
-        this.images = images;
+        // const images = (
+        //     this.file.parent.children.filter(
+        //         (f) =>
+        //             isTFile(f) &&
+        //             (f.basename === this.file.basename ||
+        //                 f.basename.startsWith(this.file.basename + ".")) &&
+        //             f.name != this.file.name &&
+        //             ["png", "jpg", "jpeg", "gif"].includes(f.extension)
+        //     ) as TFile[]
+        // ).reduce((acc, f) => {
+        //     const split = f.basename.split(".");
+        //     if (split.length > 1) {
+        //         const name = split[1];
+        //         acc[name] = this.app.vault.getResourcePath(f);
+        //     } else {
+        //         acc["recipe"] = this.app.vault.getResourcePath(f);
+        //     }
+        //     return acc;
+        // }, {} as Record<string, string>);
+        // this.images = images;
+        const images = {};
 
         this.data = data;
         this.view.$set({ data, images });
@@ -178,11 +179,17 @@ export default class CooklangPlugin extends Plugin {
     }
 
     async openMapView() {
-        const workspace = this.app.workspace;
-        workspace.detachLeavesOfType(VIEW_TYPE);
-        const leaf = workspace.getLeaf(!Platform.isMobile);
-        await leaf.setViewState({ type: VIEW_TYPE });
-        workspace.revealLeaf(leaf);
+        let newFileFolderPath;
+
+        newFileFolderPath = `Untitled.cook`;
+        let i = 0;
+
+        while (this.app.vault.getAbstractFileByPath(newFileFolderPath)) {
+            newFileFolderPath = `Untitled ${++i}.cook`;
+        }
+        const newFile = await this.app.vault.create(newFileFolderPath, "");
+        this.app.workspace.getLeaf().openFile(newFile);
+        return newFile;
     }
 }
 
