@@ -1,22 +1,20 @@
 import {
-    App,
     Plugin,
-    PluginSettingTab,
     TFile,
     TextFileView,
     WorkspaceLeaf,
-    setIcon,
+    setIcon
 } from "obsidian";
 
-import { DEFAULT_SETTINGS, type CookLangSettings } from "./settings";
 
-import Edit from "./ui/Edit.svelte";
-import View from "./ui/View.svelte";
-import { getI18n, isTFile } from "./ui/utils";
 import i18next from "i18next";
 import { resources } from "./lang/resources";
+import Edit from "./ui/Edit.svelte";
+import View from "./ui/View.svelte";
+import { DEFAULT_SETTINGS, Settings, type CookLangSettings } from "./ui/Settings";
+import { getI18n, isTFile } from "./ui/utils";
 
-const VIEW_TYPE = "svelte-view";
+const VIEW_TYPE = "svelte-cooklang";
 
 
 i18next.init({
@@ -59,12 +57,7 @@ class CooklangSvelteView extends TextFileView {
     }
 
     async onOpen(): Promise<void> {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        this.view = new View({
-            target: this.contentEl,
-            props: { data: this.data },
-        });
-
+       this.renderPreview();
         //Adds the icon to switch mode
         this.changeModeButton = this.addAction(
             "pencil",
@@ -72,6 +65,22 @@ class CooklangSvelteView extends TextFileView {
             () => this.switchMode(),
             17
         );
+    }
+
+    renderPreview(){
+        this.view =
+            this.mode === "preview"
+                ? new View({
+                      target: this.contentEl,
+                      props: { data: this.data, images: this.images, settings: this.settings },
+                  })
+                : new Edit({
+                      target: this.contentEl,
+                      props: {
+                          data: this.data,
+                          onChange: (newData:string) => (this.data = newData),
+                      },
+                  });
     }
 
     getViewData(): string {
@@ -118,19 +127,7 @@ class CooklangSvelteView extends TextFileView {
         );
         this.contentEl.innerHTML = "";
 
-        this.view =
-            this.mode === "preview"
-                ? new View({
-                      target: this.contentEl,
-                      props: { data: this.data, images: this.images },
-                  })
-                : new Edit({
-                      target: this.contentEl,
-                      props: {
-                          data: this.data,
-                          onChange: (newData:string) => (this.data = newData),
-                      },
-                  });
+        this.renderPreview()
     }
 }
 
@@ -141,7 +138,7 @@ export default class CooklangPlugin extends Plugin {
 
     async onload() {
         await this.loadSettings();
-
+;
         this.registerView(
             VIEW_TYPE,
             (leaf: WorkspaceLeaf) =>
@@ -166,7 +163,7 @@ export default class CooklangPlugin extends Plugin {
             callback: () => this.openMapView(),
         });
         // This adds a settings tab so the user can configure various aspects of the plugin
-        this.addSettingTab(new SampleSettingTab(this.app, this));
+        this.addSettingTab(new Settings(this.app, this));
     }
     cookViewCreator = (leaf: WorkspaceLeaf) => {
         return new CooklangSvelteView(leaf, this.settings);
@@ -182,16 +179,22 @@ export default class CooklangPlugin extends Plugin {
 
     onunload() {}
 
+    reloadPluginViews() {
+        console.log("reload", this.app.workspace.getLeavesOfType(VIEW_TYPE));
+        this.app.workspace.getLeavesOfType(VIEW_TYPE).forEach(leaf => {
+          if(leaf.view instanceof CooklangSvelteView) {
+            leaf.view.settings = this.settings;
+            leaf.view.renderPreview();
+          }
+        });
+      }
+
     async loadSettings() {
         this.settings = Object.assign(
             {},
             DEFAULT_SETTINGS,
             await this.loadData()
         );
-    }
-
-    async saveSettings() {
-        await this.saveData(this.settings);
     }
 
     async openMapView() {
@@ -209,19 +212,3 @@ export default class CooklangPlugin extends Plugin {
     }
 }
 
-class SampleSettingTab extends PluginSettingTab {
-    plugin: CooklangPlugin;
-
-    constructor(app: App, plugin: CooklangPlugin) {
-        super(app, plugin);
-        this.plugin = plugin;
-    }
-
-    display(): void {
-        const { containerEl } = this;
-
-        containerEl.empty();
-
-        containerEl.createEl("h2", { text: "Settings for my awesome plugin." });
-    }
-}
