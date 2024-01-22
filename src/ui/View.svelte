@@ -2,11 +2,13 @@
     import { Parser, type ParseResult } from '@cooklang/cooklang-ts';
     import { tooltip } from '@svelte-plugins/tooltips';
     import i18n from '../lang/i18n';
-	import { getI18n } from './utils';
 
 
     export let data:string;
     export  let images: Record<string, string> = {}
+
+    const translateIngredientsQuantity = (quantity:string|number)=>quantity==='some'?$i18n.t('some'):quantity;
+
     let recipe: ParseResult;
    
      $: recipe = new Parser().parse(data);
@@ -27,7 +29,7 @@
         <h3 class="section-title">{$i18n.t('ingredients')}</h3>
         <ul class="ingredients">
             {#each recipe.ingredients as ingredient}
-                <li>{ingredient.quantity} {ingredient.units} {ingredient.name}</li>
+                <li>{translateIngredientsQuantity(ingredient.quantity)} {ingredient.units} {ingredient.name}</li>
             {/each}
         </ul>
     </section>  
@@ -55,7 +57,7 @@
              {#if stepPart.type === 'text'}
                 <span>{stepPart.value}</span>
              {:else if stepPart.type === 'ingredient'}
-                <span class="ingredient"  use:tooltip={{ content: `${stepPart.quantity} ${stepPart.units} ${stepPart.name}`, action:'hover', autoPosition:true, arrow: false }}>{stepPart.name}</span>
+                <span class="ingredient"  use:tooltip={{ content: `${translateIngredientsQuantity(stepPart.quantity)} ${stepPart.units} ${stepPart.name}`, action:'hover', autoPosition:true, arrow: false }}>{stepPart.name}</span>
              {:else if stepPart.type === 'cookware'}
                 <span class="cookware" >{stepPart.name}</span>
              {:else if stepPart.type === 'timer'}
