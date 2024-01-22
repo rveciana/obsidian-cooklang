@@ -15,8 +15,6 @@
    
      $: recipe = new Parser().parse(data);
 
-
-     console.log(settings);
         
 </script>
 
@@ -26,10 +24,10 @@
     
     {:else}
     
-    {#if images.recipe}
+    {#if settings.showImages && images.recipe}
         <img class="image-main" src={images.recipe} alt="Final result" />
     {/if}
-    {#if recipe.ingredients.length > 0}
+    {#if settings.showIngredientList && recipe.ingredients.length > 0}
     <section class="section">
         <h3 class="section-title">{$i18n.t('ingredients')}</h3>
         <ul class="ingredients">
@@ -39,7 +37,7 @@
         </ul>
     </section>  
     {/if}
-    {#if recipe.cookwares.length > 0}
+    {#if settings.showCookwareList && recipe.cookwares.length > 0}
     <section class="section">
     <h3 class="section-title">{$i18n.t('cookware')}</h3>
     <ul class="cookware">
@@ -54,7 +52,7 @@
     <div>
         {#each recipe.steps as step, i}
            <h3>{$i18n.t('step')} {i+1}</h3>
-           {#if images[i]}
+           {#if settings.showImages && images[i]}
              <img src={images[i]} alt="Final result" />
             {/if}
            <p>
@@ -62,7 +60,7 @@
              {#if stepPart.type === 'text'}
                 <span>{stepPart.value}</span>
              {:else if stepPart.type === 'ingredient'}
-                <span class="ingredient"  use:tooltip={{ content: `${translateIngredientsQuantity(stepPart.quantity)} ${stepPart.units} ${stepPart.name}`, action:'hover', autoPosition:true, arrow: false }}>{stepPart.name}</span>
+                <span class="ingredient"  use:tooltip={{ content: `${translateIngredientsQuantity(stepPart.quantity)} ${stepPart.units} ${stepPart.name}`, action:'hover', autoPosition:true, arrow: false }}>{settings.showQuantitiesInline?`${translateIngredientsQuantity(stepPart.quantity)} ${stepPart.units} ${stepPart.name}`: `${stepPart.name}`}</span>
              {:else if stepPart.type === 'cookware'}
                 <span class="cookware" >{stepPart.name}</span>
              {:else if stepPart.type === 'timer'}

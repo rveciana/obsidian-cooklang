@@ -77,5 +77,5 @@ export const DEFAULT_SETTINGS: CookLangSettings = {
     showImages: true,
     showIngredientList: true,
     showCookwareList: true,
-    showQuantitiesInline: true,
+    showQuantitiesInline: false,
 };

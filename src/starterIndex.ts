@@ -68,6 +68,7 @@ class CooklangSvelteView extends TextFileView {
     }
 
     renderPreview(){
+        this.contentEl.innerHTML = "";
         this.view =
             this.mode === "preview"
                 ? new View({
@@ -125,7 +126,6 @@ class CooklangSvelteView extends TextFileView {
             this.changeModeButton,
             this.mode === "preview" ? "pencil" : "lines-of-text"
         );
-        this.contentEl.innerHTML = "";
 
         this.renderPreview()
     }
@@ -138,7 +138,7 @@ export default class CooklangPlugin extends Plugin {
 
     async onload() {
         await this.loadSettings();
-;
+
         this.registerView(
             VIEW_TYPE,
             (leaf: WorkspaceLeaf) =>
@@ -180,10 +180,9 @@ export default class CooklangPlugin extends Plugin {
     onunload() {}
 
     reloadPluginViews() {
-        console.log("reload", this.app.workspace.getLeavesOfType(VIEW_TYPE));
         this.app.workspace.getLeavesOfType(VIEW_TYPE).forEach(leaf => {
           if(leaf.view instanceof CooklangSvelteView) {
-            leaf.view.settings = this.settings;
+            leaf.view.settings = {...this.settings};
             leaf.view.renderPreview();
           }
         });
