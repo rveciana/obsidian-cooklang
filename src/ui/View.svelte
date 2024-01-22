@@ -9,18 +9,8 @@
     export  let images: Record<string, string> = {}
     let recipe: ParseResult;
    
-    $: recipe = new Parser().parse(data);
-
-    $: {
-        const lang = getI18n(data);
-        console.log(lang);
-        if($i18n.language !== lang){
-            $i18n.changeLanguage(lang);
-        }
+     $: recipe = new Parser().parse(data);
         
-    }
-
-
 </script>
 
 <div>

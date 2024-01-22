@@ -12,9 +12,21 @@ import { DEFAULT_SETTINGS, type CookLangSettings } from "./settings";
 
 import Edit from "./ui/Edit.svelte";
 import View from "./ui/View.svelte";
-import { isTFile } from "./ui/utils";
+import { getI18n, isTFile } from "./ui/utils";
+import i18next from "i18next";
+import { resources } from "./lang/resources";
 
 const VIEW_TYPE = "svelte-view";
+
+
+i18next.init({
+    lng: 'en',
+    fallbackLng: 'en',
+    resources: resources,
+     interpolation: {
+       escapeValue: false, // not needed for svelte as it escapes by default
+     }
+   });
 
 // Remember to rename these classes and interfaces!
 
@@ -86,8 +98,12 @@ class CooklangSvelteView extends TextFileView {
             return acc;
         }, {} as Record<string, string>);
         this.images = images;
+        
+        const lang = getI18n(data);
+        i18next.changeLanguage(lang);
 
         this.data = data;
+
         this.view.$set({ data, images });
     }
     clear(): void {
