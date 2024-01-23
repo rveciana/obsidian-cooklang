@@ -158,21 +158,48 @@ export default class CooklangPlugin extends Plugin {
 
         this.app.workspace.onLayoutReady(this.onLayoutReady.bind(this));
 
-        // This creates an icon in the left ribbon.
-        this.addRibbonIcon("microphone", "Sample Plugin", (evt: MouseEvent) =>
-            this.openMapView()
-        );
 
         // register the view and extensions
         this.registerView("cook", this.cookViewCreator);
         this.registerExtensions(["cook"], "cook");
 
-        // This adds a simple command that can be triggered anywhere
+
         this.addCommand({
-            id: "open-sample-modal-simple",
-            name: "Open sample modal (simple)",
-            callback: () => this.openMapView(),
-        });
+            id: "create-cooklang",
+            name: "Create new recipe",
+            callback: async () => {
+              const newFile = await this.openMapView();
+              this.app.workspace.getLeaf().openFile(newFile);
+            }
+          })
+
+          this.addCommand({
+            id: "create-cooklang-new-tab",
+            name: "Create new recipe on a new tab",
+            callback: async () => {
+              const newFile = await this.openMapView();
+              this.app.workspace.getLeaf(true).openFile(newFile);
+            }
+          })
+
+          this.addCommand({
+            id: "convert-to-cooklang",
+            name: "Convert markdown file to `.cook`",
+            checkCallback: (checking:boolean) => {
+              const file = this.app.workspace.getActiveFile();
+              const isMd = file?.extension === "md";
+              if(checking) {
+                return isMd;
+              }
+              else if(isMd) {
+                // replace last instance of .md with .cook
+                this.app.vault.rename(file,file.path.replace(/\.md$/, ".cook")).then(() => {
+                  this.app.workspace.getLeaf().openFile(file);
+                });
+              }
+            }
+          })
+
         // This adds a settings tab so the user can configure various aspects of the plugin
         this.addSettingTab(new Settings(this.app, this));
     }
