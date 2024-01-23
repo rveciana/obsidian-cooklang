@@ -62,15 +62,16 @@ class CooklangSvelteView extends TextFileView {
         this.changeModeButton = this.addAction(
             "pencil",
             "Preview (Ctrl+Click to open in new pane)",
-            () => this.switchMode(),
+            (e) => { this.switchMode(e.metaKey || e.ctrlKey);},
             17
         );
     }
 
-    renderPreview(){
+    renderPreview(newTab=false){
         this.contentEl.innerHTML = "";
-        this.view =
-            this.mode === "preview"
+        
+
+        const newElement = this.mode === "preview"
                 ? new View({
                       target: this.contentEl,
                       props: { data: this.data, images: this.images, settings: this.settings },
@@ -82,6 +83,13 @@ class CooklangSvelteView extends TextFileView {
                           onChange: (newData:string) => (this.data = newData),
                       },
                   });
+        if(newTab){
+            const newTab = this.app.workspace.getLeaf(true);
+            newTab.openFile(this.file);
+        } else { 
+            this.view = newElement;
+        }
+        
     }
 
     getViewData(): string {
@@ -109,25 +117,28 @@ class CooklangSvelteView extends TextFileView {
         }, {} as Record<string, string>);
         this.images = images;
         
-        const lang = getI18n(data);
-        i18next.changeLanguage(lang);
+        if(this.settings.autoLanguage){
+            const lang = getI18n(data);
+            i18next.changeLanguage(lang);
+        }
 
         this.data = data;
 
         this.view.$set({ data, images });
+        
     }
     clear(): void {
         this.data = "";
     }
 
-    switchMode() {
+    switchMode(newTab=false) {
         this.mode = this.mode === "preview" ? "source" : "preview";
         setIcon(
             this.changeModeButton,
             this.mode === "preview" ? "pencil" : "lines-of-text"
         );
 
-        this.renderPreview()
+        this.renderPreview(newTab)
     }
 }
 

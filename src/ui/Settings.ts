@@ -17,6 +17,18 @@ export  class Settings extends PluginSettingTab {
         new Setting(containerEl)
           .setName('Preview Options')
           .setHeading();
+
+        new Setting(containerEl)
+          .setName('Find recipe language automatically')
+          .setDesc('Detect the language of the recipe so the sections are in the same language as the rest of your notes')
+          .addToggle(toggle => toggle
+            .setValue(this.plugin.settings.autoLanguage)
+            .onChange((value: boolean) => {
+              this.plugin.settings.autoLanguage = value;
+              this.plugin.saveData(this.plugin.settings);
+              this.plugin.reloadPluginViews();
+            }));
+    
     
         new Setting(containerEl)
           .setName('Show images')
@@ -67,6 +79,7 @@ export  class Settings extends PluginSettingTab {
 
 
 export interface CookLangSettings {
+    autoLanguage: boolean;
     showImages: boolean;
     showIngredientList: boolean;
     showCookwareList: boolean;
@@ -74,6 +87,7 @@ export interface CookLangSettings {
 }
 
 export const DEFAULT_SETTINGS: CookLangSettings = {
+    autoLanguage: true,
     showImages: true,
     showIngredientList: true,
     showCookwareList: true,
