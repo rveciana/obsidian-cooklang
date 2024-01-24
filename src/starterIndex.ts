@@ -158,7 +158,6 @@ export default class CooklangPlugin extends Plugin {
 
         this.app.workspace.onLayoutReady(this.onLayoutReady.bind(this));
 
-
         // register the view and extensions
         this.registerView("cook", this.cookViewCreator);
         this.registerExtensions(["cook"], "cook");

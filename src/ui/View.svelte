@@ -92,16 +92,18 @@ width: 100%;}
         top: -1.5rem;
         position: absolute;
 
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            padding-left: 0.75rem;
-    padding-right: 0.75rem;
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
 
    
-    --tw-bg-opacity: 1;
-    background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+        --tw-bg-opacity: 1;
+        background-color:var(--background-primary);
         }
+
+      
    ul.ingredients{
     column-count: 2;
    }
