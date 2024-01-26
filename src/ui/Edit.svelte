@@ -2,12 +2,17 @@
        export let data:string;
        export let onChange: (newData: string) => void;
        $: onChange(data)
+       $: console.log(data);
 
 </script>
 
 <div>
  
-    <div class="content" contenteditable="true" bind:textContent={data} >{data}</div>
+    <div class="content" contenteditable="true" bind:textContent={data} on:keydown={(e)=>{
+        if (e.key === 'Enter') {
+        document.execCommand('insertLineBreak')
+        e.preventDefault()
+      }}}>{data}</div>
 
 </div>
 
@@ -18,7 +23,7 @@
       opacity: 0.6;
     }
     .content{
-        white-space: pre
+        white-space: pre-line;
     }
 
     
