@@ -7,6 +7,7 @@ export  const resources= {
         "cookware": "Cookware",
         "step": "Step",
         "some": "Some",
+        "source": "Source",
       }
     },
     es: {
@@ -16,7 +17,8 @@ export  const resources= {
         ingredients: "Ingredientes",
         cookware: "Utensilios de cocina",
         step: "Paso",
-        some: "Algunos"
+        some: "Algunos",
+        source: "Fuente",
       }
     },
     ca: {
@@ -26,7 +28,8 @@ export  const resources= {
         ingredients: "Ingredients",
         cookware: "Estris de cuina",
         step: "Pas",
-        some: "Alguns"
+        some: "Alguns",
+        source: "Font",
       }
     }
   }

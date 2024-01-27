@@ -2,7 +2,6 @@
        export let data:string;
        export let onChange: (newData: string) => void;
        $: onChange(data)
-       $: console.log(data);
 
 </script>
 

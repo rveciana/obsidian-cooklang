@@ -14,7 +14,7 @@
     let recipe: ParseResult;
    
      $: recipe = new Parser().parse(data);
-
+     $: console.log(recipe);
         
 </script>
 
@@ -30,6 +30,10 @@
     {#if settings.showIngredientList && recipe.ingredients.length > 0}
     <section class="section">
         <h3 class="section-title">{$i18n.t('ingredients')}</h3>
+        {#if recipe.metadata.servings}
+            <p class="servings">Servings: {recipe.metadata.servings}</p>
+        {/if}
+    
         <ul class="ingredients">
             {#each recipe.ingredients as ingredient}
                 <li>{translateIngredientsQuantity(ingredient.quantity)} {ingredient.units} {ingredient.name}</li>
@@ -72,6 +76,13 @@
         {/each}
         </div>
         {/if}
+
+    {#if recipe.metadata.source}
+    <hr />
+    <p>
+        {$i18n.t('source')}: <a href={recipe.metadata.source}>{recipe.metadata.source}</a>
+    </p>
+    {/if}
 </div>
 
 <style>
@@ -102,6 +113,11 @@ width: 100%;}
         --tw-bg-opacity: 1;
         background-color:var(--background-primary);
         }
+
+    .servings {
+        
+        width: fit-content;
+    }
 
       
    ul.ingredients{
