@@ -1,6 +1,6 @@
 {
     "name": "obsidian-svelte-starter",
-    "version": "0.0.2",
+    "version": "0.0.1",
     "description": "A plugin development template for devs who want to use svelte in Obsidian.",
     "main": "main.js",
     "scripts": {
@@ -8,7 +8,7 @@
         "dev": "npm run lint && vite build --watch",
         "build": "npx svelte-check && vite build",
         "bumpversion": "node version-bump.mjs && git add manifest.json versions.json",
-        "preversion": "npm run bumpversion"
+        "postversion": "npm run bumpversion"
     },
     "keywords": [],
     "author": "Roger Veciana i Rovira",
