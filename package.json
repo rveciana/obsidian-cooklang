@@ -1,6 +1,6 @@
 {
     "name": "obsidian-svelte-starter",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "description": "A plugin development template for devs who want to use svelte in Obsidian.",
     "main": "main.js",
     "scripts": {
