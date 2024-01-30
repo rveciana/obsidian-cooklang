@@ -1,7 +1,7 @@
 import type { Ingredient, Cookware, Timer, Text } from "@cooklang/cooklang-ts";
 import { franc } from "franc";
-import type { TAbstractFile, TFile } from "obsidian";
 import { iso6393To1 } from "./langCodes";
+import { TAbstractFile, TFile } from "obsidian";
 
 export const isText = (
     step: Ingredient | Cookware | Timer | Text
@@ -25,7 +25,9 @@ export const isTimer = (
 };
 
 export const isTFile = (file: TAbstractFile): file is TFile => {
-    return (file as TFile).basename !== undefined;
+    if (file instanceof TFile)
+        return file.basename !== undefined;
+    return false;
 };
 
 export const getI18n = (data:string) => {

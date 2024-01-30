@@ -98,9 +98,8 @@ class CooklangSvelteView extends TextFileView {
     setViewData(data: string): void {
         
         const images = (
-            this.file.parent.children.filter(
-                (f) => isTFile(f) &&
-                    (f.basename === this.file.basename ||
+            this.file.parent.children.filter(isTFile).filter(
+                (f) => (f.basename === this.file.basename ||
                         f.basename.startsWith(this.file.basename + ".")) &&
                     f.name != this.file.name &&
                     ["png", "jpg", "jpeg", "gif"].includes(f.extension)
