@@ -68,16 +68,15 @@ class CooklangSvelteView extends TextFileView {
     }
 
     renderPreview(newTab=false){
-        this.contentEl.innerHTML = "";
-        
-
+       
+        const container = this.contentEl.createEl("div");
         const newElement = this.mode === "preview"
                 ? new View({
-                      target: this.contentEl,
+                      target: container,
                       props: { data: this.data, images: this.images, settings: this.settings },
                   })
                 : new Edit({
-                      target: this.contentEl,
+                      target: container,
                       props: {
                           data: this.data,
                           onChange: (newData:string) => (this.data = newData),
