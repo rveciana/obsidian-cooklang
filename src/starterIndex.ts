@@ -53,7 +53,7 @@ class CooklangSvelteView extends TextFileView {
     }
 
     getIcon(): string {
-        return "microphone";
+        return "chef-hat";
     }
 
     async onOpen(): Promise<void> {

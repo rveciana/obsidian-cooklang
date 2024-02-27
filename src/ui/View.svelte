@@ -14,7 +14,6 @@
     let recipe: ParseResult;
    
      $: recipe = new Parser().parse(data);
-     $: console.log(recipe);
         
 </script>
 

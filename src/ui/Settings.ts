@@ -13,10 +13,6 @@ export  class Settings extends PluginSettingTab {
         const { containerEl } = this;
     
         containerEl.empty();
-    
-        new Setting(containerEl)
-          .setName('Preview Options')
-          .setHeading();
 
         new Setting(containerEl)
           .setName('Find recipe language automatically')
