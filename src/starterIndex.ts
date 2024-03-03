@@ -101,7 +101,7 @@ class CooklangSvelteView extends TextFileView {
                 (f) => (f.basename === this.file.basename ||
                         f.basename.startsWith(this.file.basename + ".")) &&
                     f.name != this.file.name &&
-                    ["png", "jpg", "jpeg", "gif"].includes(f.extension)
+                    ["png", "jpg", "jpeg", "gif","webp"].includes(f.extension)
                     ) as TFile[]
         ).reduce((acc, f) => {
             const split = f.basename.split(".");
