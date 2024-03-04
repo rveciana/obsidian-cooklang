@@ -16,8 +16,8 @@ This plugin allows you to edit and view recipes written in the Cooklang format.
 
 ## Changelog
 
-- 0.0.1: Support for *source* and *servings* metadata.
-- 0.0.0: Initial version. Can edit, view, and select the language.
+- 0.0.9: Support webp images, add languages
+- 0.0.8: Initial version. Can edit, view, and select the language
 
 ## Acknowledgments
 
