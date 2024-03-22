@@ -10,7 +10,7 @@
         "bumpversion": "node version-bump.mjs && git add manifest.json versions.json",
         "postversion": "npm run bumpversion"
     },
-    "keywords": [],
+    "keywords": ["cooklang", "cooking"],
     "author": "Roger Veciana i Rovira",
     "devDependencies": {
         "@cooklang/cooklang-ts": "^1.2.5",
