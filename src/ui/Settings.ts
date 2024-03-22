@@ -69,6 +69,17 @@ export  class Settings extends PluginSettingTab {
               this.plugin.saveData(this.plugin.settings);
               this.plugin.reloadPluginViews();
             }));
+
+        new Setting(containerEl)
+            .setName('Show quantities as fractions')
+            .setDesc('Show the ingredient quantities as fractions instead of decimals, if possible')
+            .addToggle(toggle => toggle
+              .setValue(this.plugin.settings.showFractionsInQuantities)
+              .onChange((value: boolean) => {
+                this.plugin.settings.showFractionsInQuantities = value;
+                this.plugin.saveData(this.plugin.settings);
+                this.plugin.reloadPluginViews();
+              }));
         
        
 }}
@@ -80,6 +91,7 @@ export interface CookLangSettings {
     showIngredientList: boolean;
     showCookwareList: boolean;
     showQuantitiesInline: boolean;
+    showFractionsInQuantities: boolean;
 }
 
 export const DEFAULT_SETTINGS: CookLangSettings = {
@@ -88,4 +100,5 @@ export const DEFAULT_SETTINGS: CookLangSettings = {
     showIngredientList: true,
     showCookwareList: true,
     showQuantitiesInline: false,
+    showFractionsInQuantities: true,
 };
