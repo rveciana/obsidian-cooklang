@@ -1,6 +1,6 @@
 {
     "name": "obsidian-svelte-starter",
-    "version": "0.0.8",
+    "version": "0.0.9",
     "description": "A plugin development template for devs who want to use svelte in Obsidian.",
     "main": "main.js",
     "scripts": {
@@ -10,7 +10,10 @@
         "bumpversion": "node version-bump.mjs && git add manifest.json versions.json",
         "postversion": "npm run bumpversion"
     },
-    "keywords": ["cooklang", "cooking"],
+    "keywords": [
+        "cooklang",
+        "cooking"
+    ],
     "author": "Roger Veciana i Rovira",
     "devDependencies": {
         "@cooklang/cooklang-ts": "^1.2.5",
