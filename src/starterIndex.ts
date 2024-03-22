@@ -86,6 +86,9 @@ class CooklangSvelteView extends TextFileView {
             const newTab = this.app.workspace.getLeaf(true);
             newTab.openFile(this.file);
         } else { 
+            if (this.view) {
+                this.view.$destroy();
+            }
             this.view = newElement;
         }
         
