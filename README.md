@@ -1,3 +1,6 @@
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+
 # Cooklang
 
 This plugin allows you to edit and view recipes written in the Cooklang format.
