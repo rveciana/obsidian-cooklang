@@ -7,7 +7,7 @@
     "lint": "eslint . --ext .ts",
     "dev": "npm run lint && vite build --watch",
     "build": "npx svelte-check && vite build",
-    "bumpversion": "node version-bump.mjs && git add manifest.json versions.json",
+    "bumpversion": "node version-bump.mjs && git add manifest.json versions.json && git commit -m 'bump version'",
     "postversion": "npm run bumpversion",
     "prepare": "husky",
     "set-date": "year=`date +%Y` && cat LICENSE|sed \"3s/.*/Copyright (c) $year Roger Veciana i Rovira/\">LICENSE.tmp && mv LICENSE.tmp LICENSE"
