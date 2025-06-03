@@ -1,15 +1,22 @@
 <script lang="ts">
-	export let data: string;
-	export let onChange: (newData: string) => void;
-	$: onChange(data);
+	let { data, onChange }: { data: string; onChange: (newData: string) => void } = $props();
+
+	$effect(() => {
+		if (data !== undefined) {
+			onChange(data);
+		}
+	});
 </script>
 
 <div>
 	<div
 		class="content"
 		contenteditable="true"
+		role="textbox"
+		tabindex="0"
+		aria-multiline="true"
 		bind:textContent={data}
-		on:keydown={(e) => {
+		onkeydown={(e) => {
 			if (e.key === 'Enter') {
 				document.execCommand('insertLineBreak');
 				e.preventDefault();

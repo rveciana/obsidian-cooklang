@@ -1,17 +1,38 @@
 import path from 'path';
 import { defineConfig } from 'vite';
-import { svelte } from '@sveltejs/vite-plugin-svelte';
-import autoPreprocess from 'svelte-preprocess';
+
+import esbuildSvelte from 'esbuild-svelte';
+import sveltePreprocess from 'svelte-preprocess';
 import builtins from 'builtin-modules';
+import { viteStaticCopy } from 'vite-plugin-static-copy';
+import { svelte } from '@sveltejs/vite-plugin-svelte';
+
 
 const prod = (process.argv[2] === 'production');
 
 export default defineConfig(() => {
     return {
         plugins: [
-            svelte({
-                preprocess: autoPreprocess()
-            })
+    svelte({
+      preprocess: sveltePreprocess({ typescript: true,
+        }), 
+    }),
+            esbuildSvelte({
+      compilerOptions: { css: 'injected' },
+    }),
+            viteStaticCopy({
+                targets: [
+                    {
+                    src: 'build/main.js',
+                    dest: '..',
+                    },
+                    {
+                    src: 'build/styles.css',
+                    dest: '..', 
+            }
+       ],
+      watch: false,
+    }),
         ],
         watch: !prod,
         build: {
@@ -22,7 +43,7 @@ export default defineConfig(() => {
                 ignoreTryCatch: false,
             },
             lib: {
-                entry: path.resolve(__dirname, './src/starterIndex.ts'),
+                entry: path.resolve(__dirname, './src/starterIndex.svelte.ts'),
                 formats: ['cjs'],
             },
             css: {},
@@ -32,6 +53,7 @@ export default defineConfig(() => {
                     entryFileNames: 'main.js',
                     assetFileNames: 'styles.css',
                 },
+               
                 external: ['obsidian',
                     'electron',
                     "codemirror",
@@ -63,8 +85,8 @@ export default defineConfig(() => {
                 ],
             },
             // Use root as the output dir
-            emptyOutDir: false,
-            outDir: '.',
+             outDir: './build',
+                emptyOutDir: false,
         },
     }
 });

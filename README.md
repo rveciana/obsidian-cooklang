@@ -16,6 +16,15 @@ This plugin allows you to edit and view recipes written in the Cooklang format.
 
 - Multi language: The titles for the sections (i.e. *ingredients*, *cookware* and so on) will be translated into the recipe language or the one configured in the Obsidian settings
 
+## Searching
+
+Obsidian won't search files that aren't of the extension *.md by default. Since cooklang has the .cook extension, any search will gnore the files, which is really impractical. Fortuntely, there's a workaround:
+
+- Install the `omnisearch` plugin
+- Open its settings
+- Add the word `cook` at the section `Additional TEXT files to index`
+
+The search has to be done from the sidebar search icon, but it works perfectly.
 
 ## Changelog
 

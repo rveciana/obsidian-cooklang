@@ -1,7 +1,7 @@
 import type { Ingredient, Cookware, Timer, Text } from "@cooklang/cooklang-ts";
 import { franc } from "franc";
-import { iso6393To1 } from "./langCodes";
-import { TAbstractFile, TFile } from "obsidian";
+import { iso6393To1 } from "./langCodes.js";
+import { type TAbstractFile, TFile } from "obsidian";
 
 export const isText = (
     step: Ingredient | Cookware | Timer | Text

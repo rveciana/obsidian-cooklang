@@ -1,22 +1,22 @@
 <script lang="ts">
 	import { Parser, type ParseResult } from '@cooklang/cooklang-ts';
 	import { tooltip } from '@svelte-plugins/tooltips';
-	import i18n from '../lang/i18n';
-	import { DEFAULT_SETTINGS, type CookLangSettings } from './Settings';
-	import { formatNumber } from './utils';
+	import i18n from '../lang/i18n.js';
+	import { DEFAULT_SETTINGS, type CookLangSettings } from './Settings.js';
+	import { formatNumber } from './utils.js';
 
-	export let data: string;
-	export let images: Record<string, string> = {};
-	export let settings: CookLangSettings = DEFAULT_SETTINGS;
+	let {
+		data,
+		images = {},
+		settings = DEFAULT_SETTINGS
+	}: { data: string; images: Record<string, string>; settings: CookLangSettings } = $props();
 
 	const translateIngredientsQuantity = (quantity: string | number) =>
 		quantity === 'some'
 			? $i18n.t('some')
 			: formatNumber(quantity, settings.showFractionsInQuantities);
 
-	let recipe: ParseResult;
-
-	$: recipe = new Parser().parse(data);
+	const recipe: ParseResult = new Parser().parse(data);
 </script>
 
 <div>

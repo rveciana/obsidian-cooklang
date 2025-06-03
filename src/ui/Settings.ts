@@ -1,5 +1,5 @@
-import { App, PluginSettingTab, Setting } from "obsidian";
-import type CooklangPlugin from "src/starterIndex";
+import { type App, PluginSettingTab, Setting } from "obsidian";
+import type CooklangPlugin from "src/starterIndex.svelte";
 
 export  class Settings extends PluginSettingTab {
     plugin: CooklangPlugin;

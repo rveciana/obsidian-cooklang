@@ -2,17 +2,20 @@ import {
     Plugin,
     TFile,
     TextFileView,
-    WorkspaceLeaf,
+   type WorkspaceLeaf,
     setIcon
 } from "obsidian";
 
 
 import i18next from "i18next";
-import { resources } from "./lang/resources";
+import { resources } from "./lang/resources.js";
+
 import Edit from "./ui/Edit.svelte";
 import View from "./ui/View.svelte";
-import { DEFAULT_SETTINGS, Settings, type CookLangSettings } from "./ui/Settings";
-import { getI18n, isTFile } from "./ui/utils";
+
+import { DEFAULT_SETTINGS, Settings, type CookLangSettings } from "./ui/Settings.js";
+import { getI18n, isTFile } from "./ui/utils.js";
+import { mount, unmount } from "svelte";
 
 const VIEW_TYPE = "svelte-cooklang";
 
@@ -31,16 +34,19 @@ i18next.init({
 const DEFAULT_DATA = "";
 
 class CooklangSvelteView extends TextFileView {
-    view: View | Edit;
+    view!: View | Edit;
     mode: "source" | "preview" = "preview";
-    changeModeButton: HTMLElement;
+    changeModeButton!: HTMLElement;
     data: string = DEFAULT_DATA;
     images: Record<string, string> = {};
     settings: CookLangSettings;
+    props = $state({data:DEFAULT_DATA, images:{}, settings: DEFAULT_SETTINGS});
+
 
     constructor(leaf: WorkspaceLeaf, settings: CookLangSettings) {
         super(leaf);
         this.settings = settings;
+        
     }
 
     getViewType(): string {
@@ -62,32 +68,31 @@ class CooklangSvelteView extends TextFileView {
         this.changeModeButton = this.addAction(
             "pencil",
             "Preview (Ctrl+Click to open in new pane)",
-            (e) => { this.switchMode(e.metaKey || e.ctrlKey);},
-            17
+            (e) => { this.switchMode(e.metaKey || e.ctrlKey);}
+            
         );
     }
 
     renderPreview(newTab=false){
        
         const container = this.contentEl.createEl("div");
-        const newElement = this.mode === "preview"
-                ? new View({
-                      target: container,
-                      props: { data: this.data, images: this.images, settings: this.settings },
-                  })
-                : new Edit({
-                      target: container,
-                      props: {
-                          data: this.data,
-                          onChange: (newData:string) => (this.data = newData),
-                      },
-                  });
-        if(newTab){
+
+
+
+        const newElement = this.mode === "preview"?
+        mount(View , {target: container, props: this.props})
+        :
+        mount(Edit, {target: container,
+                     props: {data: this.props.data, 
+                        onChange: (newData:string) => (this.props.data = newData)}})
+
+
+        if(newTab && this.file){
             const newTab = this.app.workspace.getLeaf(true);
             newTab.openFile(this.file);
         } else { 
             if (this.view) {
-                this.view.$destroy();
+                unmount(this.view);
             }
             this.view = newElement;
         }
@@ -97,13 +102,14 @@ class CooklangSvelteView extends TextFileView {
     getViewData(): string {
         return this.data;
     }
+
     setViewData(data: string): void {
         
         const images = (
-            this.file.parent.children.filter(isTFile).filter(
-                (f) => (f.basename === this.file.basename ||
-                        f.basename.startsWith(this.file.basename + ".")) &&
-                    f.name != this.file.name &&
+            this.file?.parent?.children.filter(isTFile).filter(
+                (f) => (f.basename === this.file?.basename ||
+                        f.basename.startsWith(this.file?.basename + ".")) &&
+                    f.name != this.file?.name &&
                     ["png", "jpg", "jpeg", "gif","webp"].includes(f.extension)
                     ) as TFile[]
         ).reduce((acc, f) => {
@@ -125,7 +131,10 @@ class CooklangSvelteView extends TextFileView {
 
         this.data = data;
 
-        this.view.$set({ data, images });
+        this.props.data = data;
+        this.props.images = images;
+
+        this.renderPreview(false)
         
     }
     clear(): void {
@@ -144,8 +153,7 @@ class CooklangSvelteView extends TextFileView {
 }
 
 export default class CooklangPlugin extends Plugin {
-    private view: CooklangSvelteView;
-    settings: CookLangSettings;
+    settings: CookLangSettings = DEFAULT_SETTINGS;
     
 
     async onload() {
@@ -154,7 +162,7 @@ export default class CooklangPlugin extends Plugin {
         this.registerView(
             VIEW_TYPE,
             (leaf: WorkspaceLeaf) =>
-                (this.view = new CooklangSvelteView(leaf, this.settings))
+                (new CooklangSvelteView(leaf, this.settings))
         );
 
         this.app.workspace.onLayoutReady(this.onLayoutReady.bind(this));
@@ -210,7 +218,7 @@ export default class CooklangPlugin extends Plugin {
         if (this.app.workspace.getLeavesOfType(VIEW_TYPE).length) {
             return;
         }
-        this.app.workspace.getRightLeaf(false).setViewState({
+        this.app.workspace.getRightLeaf(false)?.setViewState({
             type: VIEW_TYPE,
         });
     }
