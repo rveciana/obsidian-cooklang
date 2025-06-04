@@ -4,6 +4,7 @@
 	import i18n from '../lang/i18n.js';
 	import { DEFAULT_SETTINGS, type CookLangSettings } from './Settings.js';
 	import { formatNumber } from './utils.js';
+	import RangeSlider from 'svelte-range-slider-pips';
 
 	let {
 		data,
@@ -11,10 +12,14 @@
 		settings = DEFAULT_SETTINGS
 	}: { data: string; images: Record<string, string>; settings: CookLangSettings } = $props();
 
-	const translateIngredientsQuantity = (quantity: string | number) =>
+	const scales = [0.25, 0.5, 1, 1.5, 2, 3, 4];
+	let scaleIdx = $state(2);
+	let scale = $derived(scales[scaleIdx]);
+
+	const translateIngredientsQuantity = (quantity: string | number, scale: number) =>
 		quantity === 'some'
 			? $i18n.t('some')
-			: formatNumber(quantity, settings.showFractionsInQuantities);
+			: formatNumber(quantity, settings.showFractionsInQuantities, scale);
 
 	const recipe: ParseResult = new Parser().parse(data);
 </script>
@@ -30,18 +35,22 @@
 			<section class="section">
 				<h3 class="section-title">{$i18n.t('ingredients')}</h3>
 				{#if recipe.metadata.servings}
-					<p class="servings">Servings: {recipe.metadata.servings}</p>
+					<p class="servings">
+						{$i18n.t('servings')}: {scale * parseInt(recipe.metadata.servings)}
+					</p>
 				{/if}
 
 				<ul class="ingredients">
 					{#each recipe.ingredients as ingredient}
 						<li>
-							{translateIngredientsQuantity(ingredient.quantity)}
+							{translateIngredientsQuantity(ingredient.quantity, scale)}
 							{ingredient.units}
 							{ingredient.name}
 						</li>
 					{/each}
 				</ul>
+
+				<RangeSlider bind:value={scaleIdx} min={0} max={6} />
 			</section>
 		{/if}
 		{#if settings.showCookwareList && recipe.cookwares.length > 0}

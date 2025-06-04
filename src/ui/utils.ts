@@ -39,29 +39,37 @@ export const getI18n = (data:string) => {
     
 }
 
-export const formatNumber = (num: number|string, useFraction:boolean=false): string => {
-    if(typeof num === 'string') return num;
+const formatFraction = (num:number, useFraction:boolean=false) =>{
+    if(!useFraction) return num.toString();
     const epsilon = 0.0001;
-    if(Math.abs(num - 1/2) < epsilon) return useFraction?"1/2":"0.5";
-    else if(Math.abs(num - 1/3) < epsilon) return useFraction?"1/3":"0.33";
-    else if(Math.abs(num - 2/3) < epsilon) return useFraction?"2/3":"0.66";
-    else if(Math.abs(num - 1/4) < epsilon) return useFraction?"1/4":"0.25";
-    else if(Math.abs(num - 3/4) < epsilon) return useFraction?"3/4":"0.75";
-    else if(Math.abs(num - 1/5) < epsilon) return useFraction?"1/5":"0.2";
-    else if(Math.abs(num - 2/5) < epsilon) return useFraction?"2/5":"0.4";
-    else if(Math.abs(num - 3/5) < epsilon) return useFraction?"3/5":"0.6";
-    else if(Math.abs(num - 4/5) < epsilon) return useFraction?"4/5":"0.8";
-    else if(Math.abs(num - 1/6) < epsilon) return useFraction?"1/6":"0.16";
-    else if(Math.abs(num - 5/6) < epsilon) return useFraction?"5/6":"0.83";
-    else if(Math.abs(num - 1/7) < epsilon) return useFraction?"1/7":"0.14";
-    else if(Math.abs(num - 1/8) < epsilon) return useFraction?"1/8":"0.125";
-    else if(Math.abs(num - 3/8) < epsilon) return useFraction?"3/8":"0.375";
-    else if(Math.abs(num - 5/8) < epsilon) return useFraction?"5/8":"0.625";
-    else if(Math.abs(num - 7/8) < epsilon) return useFraction?"7/8":"0.875";
-    else if(Math.abs(num - 1/9) < epsilon) return useFraction?"1/9":"0.11";
-    else if(Math.abs(num - 1/10) < epsilon) return useFraction?"1/10":"0.1";
-    else if(Math.abs(num - 1/12) < epsilon) return useFraction?"1/12":"0.08";
-    else if(Math.abs(num - 1/16) < epsilon) return useFraction?"1/16":"0.06";
-    else if(Math.abs(num - 1/32) < epsilon) return useFraction?"1/32":"0.03";
-    else return num.toString();
+    if (Math.abs(num - 1 / 2) < epsilon) return "1/2";
+    else if (Math.abs(num - 1 / 3) < epsilon) return "1/3";
+    else if (Math.abs(num - 2 / 3) < epsilon) return "2/3";
+    else if (Math.abs(num - 1 / 4) < epsilon) return "1/4";
+    else if (Math.abs(num - 3 / 4) < epsilon) return "3/4";
+    else if (Math.abs(num - 1 / 5) < epsilon) return "1/5";
+    else if (Math.abs(num - 2 / 5) < epsilon) return "2/5";
+    else if (Math.abs(num - 3 / 5) < epsilon) return "3/5";
+    else if (Math.abs(num - 4 / 5) < epsilon) return "4/5";
+    else if (Math.abs(num - 1 / 6) < epsilon) return "1/6";
+    else if (Math.abs(num - 5 / 6) < epsilon) return "5/6";
+    else if (Math.abs(num - 1 / 7) < epsilon) return "1/7";
+    else if (Math.abs(num - 1 / 8) < epsilon) return "1/8";
+    else if (Math.abs(num - 3 / 8) < epsilon) return "3/8";
+    else if (Math.abs(num - 5 / 8) < epsilon) return "5/8";
+    else if (Math.abs(num - 7 / 8) < epsilon) return "7/8";
+    else if (Math.abs(num - 1 / 9) < epsilon) return "1/9";
+    else if (Math.abs(num - 1 / 10) < epsilon) return "1/10";
+    else if (Math.abs(num - 1 / 12) < epsilon) return "1/12";
+    else if (Math.abs(num - 1 / 16) < epsilon) return "1/16";
+    else if (Math.abs(num - 1 / 32) < epsilon)return "1/32";
+
+    // If no fraction matches, just return
+    return +num.toFixed( 1 );
+}
+export const formatNumber = (num: number|string, useFraction:boolean=false, scale=1): string => {
+    const str = String(num);
+    const parts = str.match(/\d+|[a-zA-Z']+/g); 
+    if (!parts) return str; 
+    return parts.map(part => /^\d+$/.test(part) ? formatFraction(Number(part)*scale, useFraction) : part).join("");
 };

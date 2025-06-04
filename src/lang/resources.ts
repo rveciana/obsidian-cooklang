@@ -8,6 +8,7 @@ export const resources = {
       "step": "Step",
       "some": "Some",
       "source": "Source",
+      "servings": "Servings",
     }
   },
   es: {
@@ -19,6 +20,7 @@ export const resources = {
       "step": "Paso",
       "some": "Algunos",
       "source": "Fuente",
+      "servings": "Porciones",
     }
   },
   ca: {
@@ -30,6 +32,7 @@ export const resources = {
       "step": "Pas",
       "some": "Alguns",
       "source": "Font",
+      "servings": "Racions",
     }
   },
   de: {
@@ -41,6 +44,7 @@ export const resources = {
       "step": "Schritt",
       "some": "Einige",
       "source": "Quelle",
+      "servings": "Portionen",
     }
   },
   fr: {
@@ -52,6 +56,7 @@ export const resources = {
       "step": "Étape",
       "some": "Certains",
       "source": "Source",
+      "servings": "Portions",
     }
   },
   pt: {
@@ -63,6 +68,7 @@ export const resources = {
       "step": "Passo",
       "some": "Alguns",
       "source": "Fonte",
+      "servings": "Porções",
     }
   },
   it: {
@@ -74,6 +80,7 @@ export const resources = {
       "step": "Passo",
       "some": "Alcuni",
       "source": "Fonte",
+      "servings": "Porzioni",
     }
   },
   nl: {
@@ -85,6 +92,7 @@ export const resources = {
       "step": "Stap",
       "some": "Sommige",
       "source": "Bron",
+      "servings": "Porties",
     }
   },
   tr: {
@@ -96,6 +104,7 @@ export const resources = {
       "step": "Adım",
       "some": "Bazı",
       "source": "Kaynak",
+      "servings": "Porsiyonlar",
     }
   },
   el: {
@@ -107,6 +116,7 @@ export const resources = {
       "step": "Βήμα",
       "some": "Κάποια",
       "source": "Πηγή",
+      "servings": "Μερίδες",
     }
   }
 }
