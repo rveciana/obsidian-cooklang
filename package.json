@@ -1,6 +1,6 @@
 {
   "name": "cooklang-viewer-and-editor",
-  "version": "0.0.12",
+  "version": "0.1.0",
   "description": "A plugin development template for devs who want to use svelte in Obsidian.",
   "main": "main.js",
   "type": "module",
