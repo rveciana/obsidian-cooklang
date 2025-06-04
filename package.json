@@ -7,6 +7,7 @@
   "scripts": {
     "lint": "eslint . --ext .ts",
     "dev": "npm run lint && vite build --watch",
+    "test": "vitest",
     "build": "npx svelte-check && vite build",
     "bumpversion": "node version-bump.mjs && git add manifest.json versions.json && git commit -m 'bump version'",
     "postversion": "npm run bumpversion",
@@ -23,6 +24,7 @@
     "@svelte-plugins/tooltips": "^3.0.3",
     "@sveltejs/vite-plugin-svelte": "^5.1.0",
     "@tsconfig/svelte": "^5.0.4",
+    "@types/node": "^22.15.29",
     "@typescript-eslint/parser": "^8.33.1",
     "builtin-modules": "^5.0.0",
     "esbuild-svelte": "^0.9.3",
@@ -40,7 +42,8 @@
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.33.0",
     "vite": "^6.3.5",
-    "vite-plugin-static-copy": "^3.0.0"
+    "vite-plugin-static-copy": "^3.0.0",
+    "vitest": "^3.2.1"
   },
   "dependencies": {
     "svelte-range-slider-pips": "^4.0.0"

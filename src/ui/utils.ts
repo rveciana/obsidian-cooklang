@@ -40,7 +40,7 @@ export const getI18n = (data:string) => {
 }
 
 const formatFraction = (num:number, useFraction:boolean=false) =>{
-    if(!useFraction) return num.toString();
+    if(!useFraction) return +num.toFixed( 1 );
     const epsilon = 0.0001;
     if (Math.abs(num - 1 / 2) < epsilon) return "1/2";
     else if (Math.abs(num - 1 / 3) < epsilon) return "1/3";
@@ -69,7 +69,7 @@ const formatFraction = (num:number, useFraction:boolean=false) =>{
 }
 export const formatNumber = (num: number|string, useFraction:boolean=false, scale=1): string => {
     const str = String(num);
-    const parts = str.match(/\d+|[a-zA-Z']+/g); 
+    const parts = str.match(/\d+(\.\d+)?|[a-zA-Z']+/g); 
     if (!parts) return str; 
-    return parts.map(part => /^\d+$/.test(part) ? formatFraction(Number(part)*scale, useFraction) : part).join("");
+    return parts.map(part => /^\d+(\.\d+)?$/.test(part) ? formatFraction(Number(part)*scale, useFraction) : part).join(" ");
 };

@@ -16,6 +16,7 @@ import View from "./ui/View.svelte";
 import { DEFAULT_SETTINGS, Settings, type CookLangSettings } from "./ui/Settings.js";
 import { getI18n, isTFile } from "./ui/utils.js";
 import { mount, unmount } from "svelte";
+import { Parser, type ParseResult } from "@cooklang/cooklang-ts";
 
 const VIEW_TYPE = "svelte-cooklang";
 
@@ -125,9 +126,13 @@ class CooklangSvelteView extends TextFileView {
             return acc;
         }, {} as Record<string, string>);
         this.images = images;
-        
-        if(this.settings.autoLanguage){
-            const lang = getI18n(data);
+
+        const recipe: ParseResult = new Parser().parse(data);
+        if(recipe.metadata.locale){
+            const lang = recipe.metadata.locale.split("_")[0]
+            i18next.changeLanguage(lang);
+        } else if(this.settings.autoLanguage){
+            const lang = getI18n(data);            
             i18next.changeLanguage(lang);
         }
 

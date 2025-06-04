@@ -16,7 +16,7 @@
 	let scaleIdx = $state(2);
 	let scale = $derived(scales[scaleIdx]);
 
-	const translateIngredientsQuantity = (quantity: string | number, scale: number) =>
+	const translateIngredientsQuantity = (quantity: string | number, scale: number = 1) =>
 		quantity === 'some'
 			? $i18n.t('some')
 			: formatNumber(quantity, settings.showFractionsInQuantities, scale);
@@ -109,7 +109,7 @@
 
 <style>
 	.image-main {
-		width: 100%;
+		max-width: 300px;
 	}
 	section {
 		border: 1px solid #ccc;

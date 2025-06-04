@@ -1327,17 +1327,17 @@
     transition: opacity 0.2s ease;
   }
 
-	.image-main.svelte-13gknjv {
-		width: 100%;
+	.image-main.svelte-8gj1x5 {
+		max-width: 300px;
 	}
-	section.svelte-13gknjv {
+	section.svelte-8gj1x5 {
 		border: 1px solid #ccc;
 		border-radius: 0.25rem;
 		padding: 10px;
 		margin-top: 10px;
 		position: relative;
 	}
-	.section-title.svelte-13gknjv {
+	.section-title.svelte-8gj1x5 {
 		display: inline-block;
 		left: 5px;
 		top: -1.5rem;
@@ -1353,27 +1353,27 @@
 		background-color: var(--background-primary);
 	}
 
-	.servings.svelte-13gknjv {
+	.servings.svelte-8gj1x5 {
 		width: fit-content;
 	}
 
-	ul.ingredients.svelte-13gknjv {
+	ul.ingredients.svelte-8gj1x5 {
 		column-count: 2;
 	}
 
-	ul.cookware.svelte-13gknjv {
+	ul.cookware.svelte-8gj1x5 {
 		column-count: 2;
 	}
 
-	span.cookware.svelte-13gknjv {
+	span.cookware.svelte-8gj1x5 {
 		font-weight: 600;
 	}
 
-	span.ingredient.svelte-13gknjv {
+	span.ingredient.svelte-8gj1x5 {
 		font-weight: 600;
 	}
 
-	span.timer.svelte-13gknjv {
+	span.timer.svelte-8gj1x5 {
 		font-weight: 600;
 	}
 
